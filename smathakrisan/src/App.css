@@ -1,0 +1,125 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('C:\Manohar\smathakrisan/AD-2-2\smathakrisan\src\Designer.png');
+  background-size: 1000px;
+} 
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  color: #c9c4c6d5;
+}
+
+.navbar-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.navbar-links li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo {
+  width: 100px; 
+}
+
+ 
+.footer {
+  background-color: #63b7a1;
+  color: #0c0c0c;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.footer-section {
+  margin-bottom: 20px; 
+}
+
+.footer-links {
+  list-style-type: none;
+  padding: 5px;
+}
+
+.footer-links li {
+  margin-bottom: 5px;
+}
+
+.footer-links li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-contact-info {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-contact-info li {
+  margin-bottom: 5px;
+}
+
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left .logo {
+  width: 150px; 
+}
+
+.navbar-right {
+  display: flex;
+}
+
+.navbar-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.navbar-links li:last-child {
+  margin-right: 0;
+}
+
+.navbar-links li a {
+  color: #0c0c0c;
+  text-decoration: none;
+}
+
+.navbar-links li a:hover {
+  text-decoration: underline;
+  color:black;
+}
+
+.navbar-right-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+}
