@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import SignUp from './Signup';
 import './App.css';
-import logo from './Assets/logo.png'
+import logo from './Assets/logo.png';
 
 function App() {
   return (
@@ -40,7 +40,6 @@ function App() {
               <li>Festicides</li>
               <li>Farming ideas</li>
               <li>Agriculture Office</li>
-
             </ul>
             <h3>About Us</h3>
             <p>Farmers benefit from the application's informational support regarding farming 
@@ -58,9 +57,10 @@ from all over the world.</p>
             <ul className="footer-contact-info">
               <li>Email: smathakrisan@agriculture.com</li>
               <li>Mobile No: 1234567890</li>
-              <li>Address: Malla Reddy University,Maisammaguda, Dulapally, Hyderabad, Telangana 500043</li>
+              <li>Address: Malla Reddy University, Maisammaguda, Dulapally, Hyderabad, Telangana 500043</li>
             </ul>
-          </div>        </footer>
+          </div>        
+        </footer>
       </div>
     </Router>
   );
@@ -70,11 +70,12 @@ const Home = () => {
   return (
     <div>
       <div className="navbar-right-middle">
-        <LoginForm /> 
+        <LoginForm />
       </div>
     </div>
   );
 }
+
 const Services = () => {
   return <h1>Our Services</h1>;
 }

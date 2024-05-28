@@ -1,38 +1,87 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './SignUp.css';
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    fullName: '',
+    firstName: '',
+    surname: '',
+    dateOfBirth: '',
+    country: 'India',
     mobile: '',
+    email: '',
     password: '',
     confirmPassword: ''
   });
+  const [passwordError, setPasswordError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (name === 'country') {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+        mobile: '',
+        mobilePlaceholder: value === 'India' ? '1234567890' : '212-456-7890'
+      }));
+    } else if (name === 'mobile') {
+      let formattedMobile;
+      if (formData.country === 'India') {
+        formattedMobile = value.replace(/\D/g, '').substring(0, 10);
+      } else {
+        formattedMobile = value.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+        if (formattedMobile.length > 12) {
+          formattedMobile = formattedMobile.substring(0, 12);
+        }
+      }
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: formattedMobile
+      }));
+    } else {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (!strongPasswordRegex.test(formData.password)) {
+      setPasswordError('Password should start with a capital letter, contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long.');
+      return;
+    }
 
-    console.log(formData);
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordError('Password and confirm password do not match.');
+      return;
+    }
 
-    navigate('/services');
+    setPasswordError('');
 
-    setFormData({
-      name: '',
-      fullName: '',
-      mobile: '',
-      password: '',
-      confirmPassword: ''
-    });
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/signup', formData);
+      console.log('User signed up:', response.data);
+      navigate('/services');
+
+      setFormData({
+        firstName: '',
+        surname: '',
+        dateOfBirth: '',
+        country: 'India',
+        mobile: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      });
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
   };
 
   return (
@@ -40,26 +89,43 @@ const SignUp = () => {
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+          <label htmlFor="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Enter your first name" required />
         </div>
         <div>
-          <label htmlFor="fullName">Full Name:</label>
-          <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
+          <label htmlFor="surname">Surname:</label>
+          <input type="text" id="surname" name="surname" value={formData.surname} onChange={handleChange} placeholder="Enter your surname" required />
         </div>
         <div>
+          <label htmlFor="dateOfBirth">Date of Birth:</label>
+          <input type="date" id="dateOfBirth" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} required />
+        </div>
+        <div className="mobile-input">
           <label htmlFor="mobile">Mobile:</label>
-          <input type="tel" id="mobile" name="mobile" value={formData.mobile} onChange={handleChange} required />
+          <div className="country-dropdown">
+            <select id="country" name="country" value={formData.country} onChange={handleChange}>
+              <option value="India">&#x1F1EE;&#x1F1F3; India</option>
+              <option value="USA">&#x1F1FA;&#x1F1F8; USA</option>
+            </select>
+          </div>
+          <input type="tel" id="mobile" name="mobile" value={formData.mobile} onChange={handleChange} placeholder={formData.mobilePlaceholder || 'Mobile Number'} required />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter your email (optional)" autoComplete="email" />
         </div>
         <div>
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required autoComplete="new-password" />
+
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+          <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm your password" required autoComplete="new-password" />
+
         </div>
-        <button type="submit" style={{ marginTop: '10px' }}>Sign Up</button> {/* Adding margin top */}
+        {passwordError && <div className="password-error">{passwordError}</div>}
+        <button type="submit" style={{ marginTop: '10px' }}>Sign Up</button>
       </form>
     </div>
   );
