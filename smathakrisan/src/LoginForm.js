@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './LoginForm.css';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import './Login.css';
 
-const LoginForm = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
+    identifier: '',
     password: ''
   });
+  const [loginError, setLoginError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,17 +19,26 @@ const LoginForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+      console.log('User logged in:', response.data);
+      
+       // Store the token in localStorage
+       //localStorage.setItem('token', response.data.token);
 
-    navigate('/Services');
-
-    setFormData({
-      username: '',
-      password: ''
-    });
+      // Navigate to the services page
+      navigate('/services');
+    } catch (error) {
+      console.error('Error logging in:', error);
+      if (error.response && (error.response.status === 404 || error.response.status === 401)) {
+        setLoginError(error.response.data.message);
+      } else {
+        setLoginError('An error occurred. Please try again.');
+      }
+    }
   };
 
   return (
@@ -35,23 +46,22 @@ const LoginForm = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username:</label>
-          <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
+          <label htmlFor="identifier">Email or Mobile:</label>
+          <input type="text" id="identifier" name="identifier" value={formData.identifier} onChange={handleChange} placeholder="Enter your email or mobile number" required />
         </div>
         <div>
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required autoComplete="current-password" />
         </div>
-        <button type="submit" style={{ marginTop: '10px' }}>Sign In</button> 
+        {loginError && <div className="login-error">{loginError}</div>}
+        <button type="submit" style={{ marginTop: '10px' }}>Login</button>
+
         <div>
-          <a href="/forgotpassword">Forgot Password?</a>
-        </div>
-        <div>
-          <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+          <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
         </div>
       </form>
     </div>
   );
 };
 
-export default LoginForm;
+export default Login;

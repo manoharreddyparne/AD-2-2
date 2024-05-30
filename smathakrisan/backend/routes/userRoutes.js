@@ -1,4 +1,3 @@
-// backend/routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -10,6 +9,12 @@ router.post('/signup', async (req, res) => {
     // Extract user data from request body
     const { firstName, surname, dateOfBirth, country, mobile, email, password } = req.body;
     console.log("Received signup request with data:", req.body);
+
+    // Check if user with the same email or mobile already exists
+    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
+    if (existingUser) {
+      return res.status(409).json({ message: 'Account already exists with this mobile or email' });
+    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds

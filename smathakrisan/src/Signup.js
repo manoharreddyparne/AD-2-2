@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link
 import axios from 'axios';
 import './SignUp.css';
 
@@ -16,6 +16,7 @@ const SignUp = () => {
     confirmPassword: ''
   });
   const [passwordError, setPasswordError] = useState('');
+  const [signUpError, setSignUpError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,7 +81,16 @@ const SignUp = () => {
         confirmPassword: ''
       });
     } catch (error) {
-      console.error('Error signing up:', error);
+      if (error.response && error.response.status === 409) {
+        // Account already exists
+        setSignUpError('Account already exists with this mobile or email. Redirecting to login page...');
+        setTimeout(() => {
+          navigate('/login');
+        }, 4000); // Redirect after 3 seconds
+      } else {
+        console.error('Error signing up:', error);
+        setSignUpError('An error occurred. Please try again.');
+      }
     }
   };
 
@@ -117,16 +127,20 @@ const SignUp = () => {
         <div>
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required autoComplete="new-password" />
-
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password:</label>
           <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm your password" required autoComplete="new-password" />
-
         </div>
         {passwordError && <div className="password-error">{passwordError}</div>}
+        {signUpError && <div className="sign-up-error">{signUpError}</div>}
         <button type="submit" style={{ marginTop: '10px' }}>Sign Up</button>
+
+        <div>
+          <p>Already have an account? <Link to="/login">Sign In</Link></p>
+        </div>
       </form>
+      
     </div>
   );
 };
