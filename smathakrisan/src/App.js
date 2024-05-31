@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import SignUp from './Signup';
+import WelcomePage from './WelcomePage';
 import './App.css';
 import logo from './Assets/logo.png';
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/products" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/welcome" element={<WelcomePage />} />
         </Routes>
 
         <footer className="footer">

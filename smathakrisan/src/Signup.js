@@ -68,7 +68,7 @@ const SignUp = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/users/signup', formData);
       console.log('User signed up:', response.data);
-      navigate('/services');
+      navigate('/welcome');
 
       setFormData({
         firstName: '',
@@ -83,10 +83,10 @@ const SignUp = () => {
     } catch (error) {
       if (error.response && error.response.status === 409) {
         // Account already exists
-        setSignUpError('Account already exists with this mobile or email. Redirecting to login page...');
+        setSignUpError('Account already exists with this mobile or email. taking you to the login...');
         setTimeout(() => {
-          navigate('/login');
-        }, 4000); // Redirect after 3 seconds
+          navigate('/login'); // taking to the loginpage
+        }, 4000); // Redirect after 4 seconds
       } else {
         console.error('Error signing up:', error);
         setSignUpError('An error occurred. Please try again.');

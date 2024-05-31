@@ -25,12 +25,15 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
       console.log('User logged in:', response.data);
-      
        // Store the token in localStorage
        //localStorage.setItem('token', response.data.token);
 
-      // Navigate to the services page
-      navigate('/services');
+      // Store the user info in localStorage
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+
+      // Navigate to the welcome page
+      navigate('/welcome');
+      
     } catch (error) {
       console.error('Error logging in:', error);
       if (error.response && (error.response.status === 404 || error.response.status === 401)) {
