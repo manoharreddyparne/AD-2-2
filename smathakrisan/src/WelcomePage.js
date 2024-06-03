@@ -7,7 +7,7 @@ const WelcomePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    window.location.button = '/login'; // Redirect to login page
+    window.location.button = '/'; // Redirect to login page
   };
 
   return (
@@ -20,7 +20,7 @@ const WelcomePage = () => {
             <a href='/'>Home</a>
             <a href="/contact">Contact</a>
             <a href="/settings">Settings</a>
-            <a onClick={handleLogout}>Logout</a>
+            <a href='/login'>Logout</a>
           </div>
         </div>
       </div>
