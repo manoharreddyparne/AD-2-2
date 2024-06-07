@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Draggable from 'react-draggable';
 import './Chatbot.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,11 +11,14 @@ const KrishnaHelpline = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('en-US'); // Default language is English
   const [isMinimized, setIsMinimized] = useState(false); // Minimize state
 
-  const handleSendMessage = (text) => {
-    // Add logic here to send message to the chatbot server and receive response
-    // For now, we'll just add a sample response
+  const handleSendMessage = async (text) => {
     const userMessage = { sender: 'user', text };
-    const reply = { sender: 'bot', text: `Hey! This is Smathakrisan. I'm still learning.` };
+    const replyText = `Hey! This is Smathakrisan. I'm still learning.`;
+
+    // Translate the reply text based on the selected language
+    const translatedReply = await translateText(replyText, selectedLanguage);
+
+    const reply = { sender: 'bot', text: translatedReply };
     setMessages([...messages, userMessage, reply]);
     setInputText('');
   };
@@ -26,7 +30,7 @@ const KrishnaHelpline = () => {
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setInputText(transcript);
-      handleSendMessage(transcript); // Automatically send the filled text after speech recognition
+      handleSendMessage(transcript);
     };
 
     recognition.start();
@@ -38,6 +42,23 @@ const KrishnaHelpline = () => {
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
+  };
+
+  const translateText = async (text, targetLanguage) => {
+    const apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY'; // Replace with your Google Translate API key
+    const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+    const target = targetLanguage.split('-')[0]; // Extract language code
+
+    try {
+      const response = await axios.post(url, {
+        q: text,
+        target,
+      });
+      return response.data.data.translations[0].translatedText;
+    } catch (error) {
+      console.error('Translation error:', error);
+      return text; // Fallback to the original text if translation fails
+    }
   };
 
   return (

@@ -1,16 +1,12 @@
 // backend/server.js
-//require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes'); // Add this line
-//const protectedRoutes = require('./routes/protectedRoutes');
 const cors = require('cors');
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
 // Middleware
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://glowing-eureka-979pwprjprwrcxrw6-3000.app.github.dev'],
@@ -18,34 +14,50 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 204
 };
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-
-// Routes
-app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes); // Add this line
-//app.use('/api/protected', protectedRoutes);
-
 // MongoDB Atlas connection
-  const mongoURI1 = 'mongodb+srv://2211CS010446:Pandu%401919@ad2-2.lyqqrtv.mongodb.net/smathakrisanDemo2?retryWrites=true&w=majority&appName=ad2-2';
-  //const mongoURI1 = 'mongodb://localhost:27017/mernapp';
-  const mongoURI = process.env.MONGODB_URI || mongoURI1;
-  mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+const mongoURI = 'mongodb+srv://2211CS010446:Pandu%401919@ad2-2.lyqqrtv.mongodb.net/smathakrisanDemo2?retryWrites=true&w=majority&appName=ad2-2';
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log('Connected to MongoDB Atlas');
 
-    const db = mongoose.connection.useDb('smathakrisanDemo2');
+    // Define schema for agricultural data
+    const agriculturalDataSchema = new mongoose.Schema({
+      question: String,
+      answer: String,
+    });
 
-    const userCollectionCount = await db.collection('users_details').estimatedDocumentCount();
+    // Create model for agricultural data
+    const AgriculturalData = mongoose.model('AgriculturalData', agriculturalDataSchema);
 
-    if (userCollectionCount === 0) {
-      await db.createCollection('users_details');
-      console.log('User collection created');
-    } else {
-      console.log('User collection already exists');
-    }
+    // Route to add agricultural data
+    app.post('/api/add-agricultural-data', async (req, res) => {
+      const { question, answer } = req.body;
+      try {
+        const newData = new AgriculturalData({ question, answer });
+        await newData.save();
+        res.status(201).json({ message: 'Agricultural data added successfully' });
+      } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    });
+
+    // Route to get agricultural data by question
+    app.get('/api/get-agricultural-data', async (req, res) => {
+      const { question } = req.query;
+      try {
+        const data = await AgriculturalData.findOne({ question });
+        if (data) {
+          res.json({ answer: data.answer });
+        } else {
+          res.status(404).json({ error: 'Question not found' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    });
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
