@@ -29,7 +29,7 @@
   padding: 10px;
   font-weight: bold;
   text-align: center;
-  cursor: move; /* Makes it clear that the header is draggable */
+  cursor: move;
   position: relative;
 }
 
@@ -110,8 +110,8 @@
   font-size: 0.7rem;
   border: none;
   border-radius: 1rem;
-  background-color: #007bff; /* Blue color */
-  color: #fff; /* White text */
+  background-color: #007bff; 
+  color: #fff; 
   cursor: pointer;
   outline: none;
   width: 110px;
@@ -128,7 +128,7 @@
   right: 10px;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #fff; /* White color */
+  color: #fff; 
 }
 
 .chatbot-icon {

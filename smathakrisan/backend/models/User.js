@@ -1,4 +1,4 @@
-// backend/models/User.js
+
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-}, { collection: 'users_details' }); // Specify the collection name here
+}, { collection: 'users_details' }); 
 
 const User = mongoose.model('User', userSchema);
 

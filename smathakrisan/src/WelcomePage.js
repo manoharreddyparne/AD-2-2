@@ -1,7 +1,8 @@
-// src/WelcomePage.js
+
 import React, { useState, useEffect } from 'react';
 import './WelcomePage.css';
-import Chatbot from './Chatbot'; // Import the Chatbot component
+import { Link } from 'react-router-dom'; 
+import Chatbot from './Chatbot'; 
 
 const WelcomePage = () => {
   const [userName, setUserName] = useState('');
@@ -15,7 +16,7 @@ const WelcomePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    window.location.href = '/login'; // Redirect to login page
+    window.location.href = '/login'; 
   };
 
   return (
@@ -24,11 +25,12 @@ const WelcomePage = () => {
         <div className="dropdown">
           <button className="dropbtn">☰</button>
           <div className="dropdown-content">
-            <a href="/profile">Profile</a>
-            <a href="/">Home</a>
-            <a href="/contact">Contact</a>
-            <a href="/settings">Settings</a>
-            <button onClick={handleLogout}>Logout</button> {/* Use a button */}
+            <Link to="/profile">Profile</Link>
+            <Link to="/">Home</Link> 
+            <Link to="/contact">Contact</Link>
+            <Link to="/learn">Learn with SmathaKrisan</Link>
+            <Link to="/settings">Settings</Link> 
+            <button onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </div>
@@ -36,9 +38,9 @@ const WelcomePage = () => {
         <h1 className="greet">👋 Hi, {userName ? userName : 'Loading...'}!</h1>
       </div>
       <div className="profile-section">
-        {/* Profile details */}
       </div>
-      <Chatbot /> {/* Integrate the Chatbot component */}
+      <Link to="/learn" className="learn-link">Learn with Smathakrisan</Link>
+      <Chatbot /> 
     </div>
   );
 };

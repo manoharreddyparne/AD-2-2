@@ -1,9 +1,10 @@
-  // src/App.js
+
   import React from 'react';
   import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
   import LoginForm from './LoginForm';
   import SignUp from './Signup';
   import WelcomePage from './WelcomePage';
+  import FarmersPage from './FarmersPage';
   import Profile from './Profile';
   import './App.css';
   import logo from './Assets/logo.png';
@@ -26,7 +27,8 @@
             <Route path="/products" element={<Products />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/welcome" element={<WelcomePage />} />
-            <Route path="/profile" element={<Profile />} /> {/* Add this line */}
+            <Route path="/profile" element={<Profile />} /> 
+            <Route path="/learn" element={<FarmersPage />} />
           </Routes>
 
           <footer className="footer">

@@ -1,10 +1,10 @@
-// backend/routes/userRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-// Signup route
+
 router.post('/signup', async (req, res) => {
   const { firstName, surname, email, mobile, password, dateOfBirth, country } = req.body;
 
@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Login route
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,7 +52,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Route to get user data by email or mobile
 router.get('/:identifier', async (req, res) => {
   try {
     const { identifier } = req.params;
@@ -79,7 +78,7 @@ router.get('/:identifier', async (req, res) => {
   }
 });
 
-// Route to fetch user profile data
+
 router.get('/profile/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;

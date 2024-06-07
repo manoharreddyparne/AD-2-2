@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link
+import { useNavigate, Link } from 'react-router-dom'; 
 import axios from 'axios';
 import './SignUp.css';
 
@@ -82,11 +82,11 @@ const SignUp = () => {
       });
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        // Account already exists
+      
         setSignUpError('Account already exists with this mobile or email. taking you to the login...');
         setTimeout(() => {
-          navigate('/login'); // taking to the loginpage
-        }, 4000); // Redirect after 4 seconds
+          navigate('/login');
+        }, 4000);
       } else {
         console.error('Error signing up:', error);
         setSignUpError('An error occurred. Please try again.');

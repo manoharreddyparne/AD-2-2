@@ -7,16 +7,26 @@ import { faMicrophone, faTimes, faCommentDots } from '@fortawesome/free-solid-sv
 const KrishnaHelpline = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('en-US'); // Default language is English
-  const [isMinimized, setIsMinimized] = useState(false); // Minimize state
+  const [selectedLanguage, setSelectedLanguage] = useState('en-US'); 
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const handleSendMessage = (text) => {
-    // Add logic here to send message to the chatbot server and receive response
-    // For now, we'll just add a sample response
     const userMessage = { sender: 'user', text };
-    const reply = { sender: 'bot', text: `Hey! This is Smathakrisan. I'm still learning.` };
+    let reply;
+    if (selectedLanguage === 'te-IN') { 
+      reply = { sender: 'bot', text: 'హే, ఇది స్మతక్రిసన్. నేను ఇంకా నేర్చుకుంటున్నాను. కొంత సమయం కావాలి!!!' };
+    } else if(selectedLanguage==='hi-IN'){
+      reply = { sender: 'bot', text: 'अरे, यह स्मथकृष्णन है। मैं अभी भी सीख रहा हूँ। कुछ समय चाहिए!!!' };
+    } else{ 
+      reply = { sender: 'bot', text: 'Hey, this is Smathakrisan. I am still learning. Need some time!!!' };
+    }
+
     setMessages([...messages, userMessage, reply]);
     setInputText('');
+
+    if (text !== inputText) { 
+      speak(reply.text);
+    }
   };
 
   const handleSpeechInput = () => {
@@ -26,7 +36,7 @@ const KrishnaHelpline = () => {
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setInputText(transcript);
-      handleSendMessage(transcript); // Automatically send the filled text after speech recognition
+      handleSendMessage(transcript); 
     };
 
     recognition.start();
@@ -38,6 +48,12 @@ const KrishnaHelpline = () => {
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
+  };
+
+  const speak = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = selectedLanguage;
+    window.speechSynthesis.speak(utterance);
   };
 
   return (
