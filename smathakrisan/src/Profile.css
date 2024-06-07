@@ -1,0 +1,29 @@
+/* src/Profile.css */
+
+.profile-container {
+    width: 30%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    margin-top: 200px;
+    margin-bottom: 30px;
+    margin-left:50px;
+    
+  }
+  
+  .profile-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-container p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+  }
+  
+  .profile-container .error {
+    color: red;
+  }
+  
