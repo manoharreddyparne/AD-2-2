@@ -29,7 +29,7 @@ app.use('/api/auth', authRoutes); // Add this line
 //app.use('/api/protected', protectedRoutes);
 
 // MongoDB Atlas connection
-  const mongoURI1 = 'mongodb+srv://2211CS010446:Pandu%401919@ad2-2.lyqqrtv.mongodb.net/smathakrisanDemo2?retryWrites=true&w=majority';
+  const mongoURI1 = 'mongodb+srv://2211CS010446:Pandu%401919@ad2-2.lyqqrtv.mongodb.net/smathakrisanDemo2?retryWrites=true&w=majority&appName=ad2-2';
   //const mongoURI1 = 'mongodb://localhost:27017/mernapp';
   const mongoURI = process.env.MONGODB_URI || mongoURI1;
   mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
