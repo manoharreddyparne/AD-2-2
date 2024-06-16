@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import './WelcomePage.css';
+import './styles/WelcomePage.css';
 import { Link } from 'react-router-dom'; 
 import Chatbot from './Chatbot'; 
 

@@ -7,7 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 
 const corsOptions = {
@@ -24,6 +24,7 @@ app.use('/api/auth', authRoutes);
 
 
 const mongoURI1 = 'mongodb+srv://2211CS010446:Pandu%401919@ad2-2.lyqqrtv.mongodb.net/smathakrisanDemo2?retryWrites=true&w=majority&appName=ad2-2';
+//const mongoURI1='mongodb://localhost:27017/mernapp';
 const mongoURI = process.env.MONGODB_URI || mongoURI1;
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {

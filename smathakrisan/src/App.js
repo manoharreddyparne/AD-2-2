@@ -6,7 +6,7 @@
   import WelcomePage from './WelcomePage';
   import FarmersPage from './FarmersPage';
   import Profile from './Profile';
-  import './App.css';
+  import './styles/App.css';
   import logo from './Assets/logo.png';
 
   function App() {

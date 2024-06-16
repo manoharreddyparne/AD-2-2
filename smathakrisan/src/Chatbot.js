@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
-import './Chatbot.css';
+import './styles/Chatbot.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faTimes, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 
