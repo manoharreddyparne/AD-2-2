@@ -1,11 +1,11 @@
 
   import React from 'react';
   import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-  import LoginForm from './LoginForm';
-  import SignUp from './Signup';
-  import WelcomePage from './WelcomePage';
-  import FarmersPage from './FarmersPage';
-  import Profile from './Profile';
+  import LoginForm from './components/LoginForm';
+  import SignUp from './components/Signup';
+  import WelcomePage from './components/WelcomePage';
+  import FarmersPage from './components/FarmersPage';
+  import Profile from './components/Profile';
   import './styles/App.css';
   import logo from './Assets/logo.png';
 
