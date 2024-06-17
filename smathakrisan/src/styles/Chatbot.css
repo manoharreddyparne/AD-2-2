@@ -1,6 +1,7 @@
+/* Chatbot container */
 .chatbot {
   width: 300px;
-  border: 1px solid #ccc;
+  border: 1px solid#ccc;
   border-radius: 5px;
   overflow: hidden;
   position: fixed;
@@ -12,6 +13,7 @@
   transition: all 0.3s ease;
 }
 
+/* Minimized state */
 .chatbot.minimized {
   width: 50px;
   height: 50px;
@@ -23,16 +25,18 @@
   cursor: pointer;
 }
 
+/* Header */
 .chatbot-header {
   background-color: #007bff;
   color: white;
   padding: 10px;
   font-weight: bold;
   text-align: center;
-  cursor: move;
+  cursor: move; /* Allows the header to be draggable */
   position: relative;
 }
 
+/* Close button in header */
 .chatbot-header .close-button {
   position: absolute;
   top: 5px;
@@ -44,38 +48,42 @@
   cursor: pointer;
 }
 
+/* Messages area */
 .chatbot-messages {
-  height: 200px;
-  overflow-y: auto;
+  height: 200px; /* Limits the height of the messages area */
+  overflow-y: auto; /* Enables scrolling when messages overflow */
   padding: 10px;
 }
 
+/* Individual message styling */
 .message {
   margin-bottom: 10px;
   padding: 5px 10px;
   border-radius: 5px;
+  
 }
 
 .message.bot {
-  background-color: #f0f0f0;
+  background-color: darkcyan; /* Bot message background color */
   text-align: left;
 }
 
 .message.user {
-  background-color: #d3e3fc;
+  background-color: lightsteelblue; /* User message background color */
   text-align: right;
 }
 
+/* Input area for user */
 .chatbot-input {
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: darkblue;
   border-top: 1px solid #ccc;
   display: flex;
   align-items: center;
 }
 
 .chatbot-input input {
-  width: 60%;
+  width: 60%; /* Adjusts input width */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -83,7 +91,7 @@
 }
 
 .chatbot-input button {
-  width: 18%;
+  width: 18%; /* Adjusts button width */
   padding: 8px;
   margin-left: 4px;
   border: none;
@@ -98,6 +106,7 @@
   background-color: #0056b3;
 }
 
+/* Dropdown for language selection */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -110,8 +119,8 @@
   font-size: 0.7rem;
   border: none;
   border-radius: 1rem;
-  background-color: #007bff; 
-  color: #fff; 
+  background-color: #007bff;
+  color: #fff;
   cursor: pointer;
   outline: none;
   width: 110px;
@@ -122,15 +131,16 @@
 }
 
 .dropdown::after {
-  content: '\25BC';
+  content: '\25BC'; /* Arrow down for dropdown */
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #fff; 
+  color: #fff;
 }
 
+/* Icon when chatbot is minimized */
 .chatbot-icon {
   width: 50px;
   height: 50px;

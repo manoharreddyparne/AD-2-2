@@ -7,24 +7,24 @@ import { faMicrophone, faTimes, faCommentDots } from '@fortawesome/free-solid-sv
 const KrishnaHelpline = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('en-US'); 
+  const [selectedLanguage, setSelectedLanguage] = useState('en-US');
   const [isMinimized, setIsMinimized] = useState(false);
 
   const handleSendMessage = (text) => {
     const userMessage = { sender: 'user', text };
     let reply;
-    if (selectedLanguage === 'te-IN') { 
+    if (selectedLanguage === 'te-IN') {
       reply = { sender: 'bot', text: 'హే, ఇది స్మతక్రిసన్. నేను ఇంకా నేర్చుకుంటున్నాను. కొంత సమయం కావాలి!!!' };
-    } else if(selectedLanguage==='hi-IN'){
+    } else if (selectedLanguage === 'hi-IN') {
       reply = { sender: 'bot', text: 'अरे, यह स्मथकृष्णन है। मैं अभी भी सीख रहा हूँ। कुछ समय चाहिए!!!' };
-    } else{ 
+    } else {
       reply = { sender: 'bot', text: 'Hey, this is Smathakrisan. I am still learning. Need some time!!!' };
     }
 
     setMessages([...messages, userMessage, reply]);
     setInputText('');
 
-    if (text !== inputText) { 
+    if (text !== inputText) {
       speak(reply.text);
     }
   };
@@ -36,7 +36,7 @@ const KrishnaHelpline = () => {
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setInputText(transcript);
-      handleSendMessage(transcript); 
+      handleSendMessage(transcript);
     };
 
     recognition.start();
@@ -54,6 +54,12 @@ const KrishnaHelpline = () => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = selectedLanguage;
     window.speechSynthesis.speak(utterance);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage(inputText);
+    }
   };
 
   return (
@@ -84,6 +90,7 @@ const KrishnaHelpline = () => {
                 placeholder="Type your message..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
+                onKeyDown={handleKeyDown} // Add keydown event handler
               />
               <button onClick={handleSpeechInput}>
                 <FontAwesomeIcon icon={faMicrophone} />

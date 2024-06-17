@@ -1,14 +1,21 @@
-
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
+const upload = require('../middleware/upload'); // Import the upload middleware
 
-
+// POST route for user registration
 router.post('/signup', async (req, res) => {
   const { firstName, surname, email, mobile, password, dateOfBirth, country } = req.body;
 
   try {
+    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
+
+    if (existingUser) {
+      return res.status(409).json({ message: 'Account already exists with this mobile or email. Redirecting to login...' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       firstName,
@@ -21,14 +28,17 @@ router.post('/signup', async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: 'User registered successfully' });
+
+    const createdUser = await User.findOne({ email });
+
+    res.status(201).json({ message: 'User registered successfully', user: createdUser });
   } catch (error) {
     console.error('Error during signup:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-
+// POST route for user login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,6 +62,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// GET route to fetch user by identifier (email or mobile)
 router.get('/:identifier', async (req, res) => {
   try {
     const { identifier } = req.params;
@@ -70,7 +81,8 @@ router.get('/:identifier', async (req, res) => {
       dateOfBirth: user.dateOfBirth,
       country: user.country,
       mobile: user.mobile,
-      email: user.email
+      email: user.email,
+      _id: user._id
     });
   } catch (error) {
     console.error('Error fetching user data:', error);
@@ -78,17 +90,68 @@ router.get('/:identifier', async (req, res) => {
   }
 });
 
-
+// GET route to fetch user profile by userId
 router.get('/profile/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Invalid User ID' });
+    }
+
     const user = await User.findById(userId);
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     res.json(user);
   } catch (error) {
     console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.put('/:userId', upload.single('profilePicture'), async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Invalid User ID' });
+    }
+
+    const { firstName, surname, dateOfBirth } = req.body;
+    let profilePicture;
+
+    if (req.file) {
+      profilePicture = req.file.path.replace(/\\/g, '/'); // Fix path format for URLs
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (firstName) {
+      user.firstName = firstName;
+    }
+    if (surname) {
+      user.surname = surname;
+    }
+    if (dateOfBirth) {
+      user.dateOfBirth = dateOfBirth;
+    }
+    if (profilePicture) {
+      user.profilePicture = profilePicture; // Save profile picture path to user document
+    }
+
+    await user.save();
+
+   // Return updated user object with profile picture URL
+    res.status(200).json({ message: 'User profile updated successfully', user });
+  } catch (error) {
+    console.error('Error updating user profile:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

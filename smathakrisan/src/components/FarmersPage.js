@@ -7,7 +7,7 @@ const FarmersPage = () => {
       <section className="section">
         <h2>Modern Farming Technologies</h2>
         <div className="image">
-          <img src=".Assets/modern.jpeg" alt="Modern Farming Technologies" />
+          <img src="../Assets/modern.jpeg" alt="Modern Farming Technologies" />
         </div>
         <p>
           Learn about the latest advancements in farming technologies, including precision agriculture,
@@ -19,7 +19,7 @@ const FarmersPage = () => {
       <section className="section">
         <h2>Avoiding Pesticides</h2>
         <div className="image">
-          <img src="avoiding_pesticides.jpg" alt="Avoiding Pesticides" />
+          <img src="../Assets/avoiding_pesticides.jpg" alt="Avoiding Pesticides" />
         </div>
         <p>
           Discover methods for pesticide-free farming, such as integrated pest management (IPM), crop rotation,
@@ -31,7 +31,7 @@ const FarmersPage = () => {
       <section className="section">
         <h2>Safe Farming Practices</h2>
         <div className="image">
-          <img src="safe_farming.jpg" alt="Safe Farming Practices" />
+          <img src="../Assets/safe_farming.jpg" alt="Safe Farming Practices" />
         </div>
         <p>
           Explore best practices for safe farming, including proper handling of agricultural chemicals, use of

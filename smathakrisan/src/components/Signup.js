@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/SignUp.css';
 
@@ -51,7 +51,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     if (!strongPasswordRegex.test(formData.password)) {
       setPasswordError('Password should start with a capital letter, contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long.');
@@ -82,11 +82,10 @@ const SignUp = () => {
       });
     } catch (error) {
       if (error.response && error.response.status === 409) {
-      
-        setSignUpError('Account already exists with this mobile or email. taking you to the login...');
+        setSignUpError('Account already exists with this mobile or email. Redirecting to login...');
         setTimeout(() => {
           navigate('/login');
-        }, 4000);
+        }, 4000); // Redirect to login after 4 seconds
       } else {
         console.error('Error signing up:', error);
         setSignUpError('An error occurred. Please try again.');
@@ -140,7 +139,6 @@ const SignUp = () => {
           <p>Already have an account? <Link to="/login">Sign In</Link></p>
         </div>
       </form>
-      
     </div>
   );
 };

@@ -1,42 +1,41 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginForm from './components/LoginForm';
+import SignUp from './components/Signup';
+import WelcomePage from './components/WelcomePage';
+import FarmersPage from './components/FarmersPage';
+import Profile from './components/Profile';
+import './styles/App.css';
+import logo from './Assets/logo.png';
 
-  import React from 'react';
-  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-  import LoginForm from './components/LoginForm';
-  import SignUp from './components/Signup';
-  import WelcomePage from './components/WelcomePage';
-  import FarmersPage from './components/FarmersPage';
-  import Profile from './components/Profile';
-  import './styles/App.css';
-  import logo from './Assets/logo.png';
+function App() {
+  return (
+    <Router>
+      <div>
+        <nav className="navbar">
+          <div className="navbar-left">
+            <img src={logo} alt="SmathaKrisan Logo" className="logo" />
+          </div>
+        </nav>
 
-  function App() {
-    return (
-      <Router>
-        <div>
-          <nav className="navbar">
-            <div className="navbar-left">
-              <img src={logo} alt="SmathaKrisan Logo" className="logo" />
-            </div>
-          </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/farmers" element={<FarmersPage />} /> {/* Updated route for FarmersPage */}
+        </Routes>
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/welcome" element={<WelcomePage />} />
-            <Route path="/profile" element={<Profile />} /> 
-            <Route path="/learn" element={<FarmersPage />} />
-          </Routes>
-
-          <footer className="footer">
+        <footer className="footer">
             <div className="footer-content">
               <h3>Services:</h3>
               <ul className="footer-links">
                 <li>Machines</li>
-                <li>Festicides</li>
+                <li>Pesticides</li>
                 <li>Farming ideas</li>
                 <li>Agriculture Office</li>
               </ul>
@@ -76,17 +75,17 @@
       </div>
     );
   };
-
+  
   const Services = () => {
     return <h1>Our Services</h1>;
   };
-
+  
   const Products = () => {
     return <h1>Our Products</h1>;
   };
-
+  
   const Contact = () => {
     return <h1>Contact Us</h1>;
   };
-
+  
   export default App;

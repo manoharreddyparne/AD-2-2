@@ -1,32 +1,42 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const User = require('./models/User');
+
+require('dotenv').config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-
+// CORS options
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://glowing-eureka-979pwprjprwrcxrw6-3000.app.github.dev'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
 };
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
+// Routes
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
+// MongoDB Connection
+const mongoURI = process.env.MONGODB_URI;
 
-const mongoURI1 = 'mongodb+srv://2211CS010446:Pandu%401919@ad2-2.lyqqrtv.mongodb.net/smathakrisanDemo2?retryWrites=true&w=majority&appName=ad2-2';
-//const mongoURI1='mongodb://localhost:27017/mernapp';
-const mongoURI = process.env.MONGODB_URI || mongoURI1;
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+
+  })
+  mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log('Connected to MongoDB Atlas');
 
