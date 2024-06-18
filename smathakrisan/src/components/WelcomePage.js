@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/WelcomePage.css';
-import '../styles/Profile.css'; // Include Profile.css for profile styles
+import '../styles/Profile.css';
 import { Link } from 'react-router-dom';
 import Chatbot from './Chatbot';
 import Profile from './Profile';

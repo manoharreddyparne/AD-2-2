@@ -85,7 +85,7 @@ const SignUp = () => {
         setSignUpError('Account already exists with this mobile or email. Redirecting to login...');
         setTimeout(() => {
           navigate('/login');
-        }, 4000); // Redirect to login after 4 seconds
+        }, 4000); 
       } else {
         console.error('Error signing up:', error);
         setSignUpError('An error occurred. Please try again.');

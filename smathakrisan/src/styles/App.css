@@ -10,14 +10,14 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 30px;
+  padding-top: 90px;
   background-color: white;
   color: #c9c4c6d5;
 }
 
 .logo {
 width: 100%;
- display: none; /*currently i am stopping the logo to be display */
+ display:none; 
 
 }
 

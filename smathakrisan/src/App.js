@@ -11,12 +11,12 @@ import logo from './Assets/logo.png';
 function App() {
   return (
     <Router>
-      <div>
-        <nav className="navbar">
+       <nav className="navbar">
           <div className="navbar-left">
             <img src={logo} alt="SmathaKrisan Logo" className="logo" />
           </div>
         </nav>
+      <div>
 
         <Routes>
           <Route path="/" element={<Home />} />

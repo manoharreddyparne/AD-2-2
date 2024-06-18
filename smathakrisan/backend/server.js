@@ -12,7 +12,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS options
+
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://glowing-eureka-979pwprjprwrcxrw6-3000.app.github.dev'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -23,11 +23,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-// Routes
+
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
-// MongoDB Connection
+
 const mongoURI = process.env.MONGODB_URI;
 
 mongoose

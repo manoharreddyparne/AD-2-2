@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/Profile.css";
 
-const Profile = ({ onClose, theme }) => { // Receive theme as prop
+const Profile = ({ onClose, theme }) => { 
   const [userData, setUserData] = useState({});
   const [error, setError] = useState("");
   const [editingField, setEditingField] = useState("");
